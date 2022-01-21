@@ -24,7 +24,6 @@ def returnPitchNote(actualPitch):
 
 hannWindow = np.hanning(windowSize)
 def callback(data, frames, time, status):
-
   if not hasattr(callback, "samples"):
     callback.samples = [0 for _ in range(windowSize)]
   if not hasattr(callback, "buffer"):
