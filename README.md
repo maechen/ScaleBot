@@ -16,4 +16,14 @@ Python dependencies:
 
   pip install fastapi
   
+Testing
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 This code was tested on Python 3.7.3 on Windows 32
+
+Feel free to use these links to test
+
+C Major Scale:
+https://youtu.be/VUhe3mebDps
+
+D Major Scale:
+https://youtu.be/StnSaINp2m4
