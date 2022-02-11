@@ -7,6 +7,7 @@ This repository allows violin users to record a simple, one octave scale, and it
 Dependencies
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Python dependencies:
+
 pip install numpy
 pip install scipy
 pip install sounddevice
