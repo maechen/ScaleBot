@@ -52,8 +52,8 @@ def callback(data, frames, time, status):
         hanning_samps = callback.samples * hanning_window  # multiplying signal by hanning window
         mag_spec = abs(scipy.fftpack.fft(hanning_samps)[:len(hanning_samps) // 2])  # only look at last few seconds
 
-        for i in range(int(30 / df)):
-            mag_spec[i] = 0  # everything below 30 hz set to 0
+        for i in range(int(250 / df)):
+            mag_spec[i] = 0  # everything below 250 hz set to 0
 
         # suppresses everything below average energy per frequency
         for j in range(len(octave_bands) - 1):
@@ -89,7 +89,6 @@ def callback(data, frames, time, status):
         callback.buffer.pop()
 
         # code was taken from not-chciken on GitHub
-        os.system('cls' if os.name == 'nt' else 'clear')
         if callback.buffer.count(callback.buffer[0]) == len(callback.buffer):
             print(f"Closest note: {closest_note} {max_freq}/{closest_pitch}")
             actual_notes.append(closest_note)
@@ -174,7 +173,7 @@ def api_stop():
 
     actual_notes = actual_notes[1:]
     actual_pitches = actual_pitches[1:]
-    actual_pitches = np.unique(actual_pitches).tolist()
+    actual_pitches = list(dict.fromkeys(actual_pitches))
     d_scale = all(item in actual_notes for item in d_major_notes)
     c_scale = all(item in actual_notes for item in c_major_notes)
     individual_percent = []
@@ -188,13 +187,11 @@ def api_stop():
         matched_scale = "doesn't match"
 
     if matched_scale == "d_major":
-        for i in range(len(actual_pitches)-1):  # individual_percent doesn't return the same amount of indexes as
-            # actual_pitches
+        for i in range(0, len(actual_pitches)): 
             individual_percent.append(actual_pitches[i] / d_major_pitches[i])
         percent_accuracy = round((sum(individual_percent) / len(individual_percent)) * 100, 2)
     elif matched_scale == "c_major":
-        for i in range(len(actual_pitches)-1):  # individual_percent doesn't return the same amount of indexes as
-            # actual_pitches
+        for i in range(0, len(actual_pitches)):  
             individual_percent.append(actual_pitches[i] / c_major_pitches[i])
         percent_accuracy = round((sum(individual_percent) / len(individual_percent)) * 100, 2)
 
@@ -232,4 +229,3 @@ def api_status():
             "each_note_accuracy": matched_scale,
             "percent_accuracy": matched_scale,
         }
-    
